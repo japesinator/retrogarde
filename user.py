@@ -8,6 +8,7 @@ import getpass
 import shutil
 import glob
 import hashlib
+import bleach
 
 def random_user():
     return ''.join(random.choice(string.ascii_uppercase) for i in range(12))
@@ -54,6 +55,10 @@ def auth(auth_hash):
         return (True, 4)
     elif auth_hash == "8a8a12b68cd5ca212993326b86dc95fc9bc1bf1505d7bb4b22de21dff42c28f3":
         print("You win! Congratulations!")
+	hs_name = raw_input ("Please enter your name, enclosed in quotes, for our leaderboard\n")
+	hs_name = bleach.clean(hs_name)
+	os.system ("echo \"" + hs_name + "\" >> /var/www/construct.pw/winners.txt")
+	print("Check it out at http://construct.pw/winners.txt!")
 	return (False, )
     else:
         return (False, )
